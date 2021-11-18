@@ -1,6 +1,6 @@
 package Category;
 
-class CategoryInfo {
+public class CategoryInfo {
 	
 	//private String CategoryName;
 	/*
@@ -10,7 +10,7 @@ class CategoryInfo {
 	 */
 	private CategoryDB CDB;
 	
-	CategoryInfo() {
+	public CategoryInfo() {
 		this.CDB = new CategoryDB();
 	}
 	
