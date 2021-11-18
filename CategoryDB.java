@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.Vector;
 import java.util.Arrays;
 
-class CategoryDB {
+public class CategoryDB {
 	final static int INT_MAX = Integer.MAX_VALUE; //카테고리별 지출 한도 기본값(int 최댓값)
 
 	private Vector<String> categoryList = new Vector<String>(Arrays.asList("수입", "도서", "유흥", "교통", "식사")); //카테고리 목록, 기본적으로 수입, 도서, 유흥, 교통, 식사 카테고리가 있다.
@@ -66,8 +66,20 @@ class CategoryDB {
 	
 	public void editedCategory(String oldCategory, String newCategory) { //카테고리 변경
 		
-		deletedCategory(oldCategory); //변경 전 카테고리를 지우고
-		addedCategory(newCategory); //변경 후 카테고리를 추가한다.
+		int index = categoryList.indexOf(oldCategory); //예전 카테고리 위치
+		int oldLimit = categoryLimit.get(index); //예전 카테고리의 지출한도
+		
+		if (categoryList.contains(oldCategory) == true) { //예전 카테고리를 목록에서 삭제
+			categoryLimit.remove(index); //해당 지출한도 삭제
+			categoryList.remove(oldCategory); //카테고리 삭제
+			updateCategory(oldCategory, false); //카테고리 DB 갱신
+		}
+		
+		if (categoryList.contains(newCategory) == false) { //변경할 카테고리 목록에 추가
+			categoryList.add(newCategory); //리스트에 추가
+			categoryLimit.add(oldLimit); //미리 저장해둔 예전 지출한도 추가
+			updateCategory(newCategory, false); //카테고리 DB 갱신
+		}
 	}
 	
 	public void editedCategoryLimit(String c, int limit) { //카테고리 c의 지출한도 수정
