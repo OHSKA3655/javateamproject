@@ -66,19 +66,19 @@ public class CategoryDB {
 	
 	public void editedCategory(String oldCategory, String newCategory) { //카테고리 변경
 		
-		int index = categoryList.indexOf(oldCategory); //예전 카테고리 위치
-		int oldLimit = categoryLimit.get(index); //예전 카테고리의 지출한도
+		if (categoryList.contains(oldCategory) == true) {
 		
-		if (categoryList.contains(oldCategory) == true) { //예전 카테고리를 목록에서 삭제
-			categoryLimit.remove(index); //해당 지출한도 삭제
-			categoryList.remove(oldCategory); //카테고리 삭제
-			updateCategory(oldCategory, false); //카테고리 DB 갱신
-		}
+			int index = categoryList.indexOf(oldCategory); //예전 카테고리 위치
+			int oldLimit = categoryLimit.get(index); //예전 카테고리의 지출한도
+				categoryLimit.remove(index); //해당 지출한도 삭제
+				categoryList.remove(oldCategory); //카테고리 삭제
+				updateCategory(oldCategory, false); //카테고리 DB 갱신
 		
-		if (categoryList.contains(newCategory) == false) { //변경할 카테고리 목록에 추가
-			categoryList.add(newCategory); //리스트에 추가
-			categoryLimit.add(oldLimit); //미리 저장해둔 예전 지출한도 추가
-			updateCategory(newCategory, false); //카테고리 DB 갱신
+			if (categoryList.contains(newCategory) == false) { //변경할 카테고리 목록에 추가
+				categoryList.add(newCategory); //리스트에 추가
+				categoryLimit.add(oldLimit); //미리 저장해둔 예전 지출한도 추가
+				updateCategory(newCategory, false); //카테고리 DB 갱신
+			}
 		}
 	}
 	
@@ -91,26 +91,17 @@ public class CategoryDB {
 			updateCategory(c, true); //카테고리 DB 갱신
 		}
 	}
+
+	public Vector<String> getCategory() { //카테고리 Getter
 	
-	public String[] getCategory() { //카테고리 Getter
-		String CategoryName[] = new String[categoryList.size()];
-		
-		for (int i = 0; i < categoryList.size(); i++) {
-			CategoryName[i] = categoryList.get(i);
-		}
-		
-		return CategoryName;
+		return categoryList;
 	}
 	
-	public int[] getCategoryLimit() { //카테고리별 지출한도 Getter
-		int[] CategoryLimit = new int[categoryLimit.size()];
-		
-		for (int i = 0; i < categoryLimit.size(); i++) {
-			CategoryLimit[i] = categoryLimit.get(i);
-		}
-		
-		return CategoryLimit;
+	public Vector<Integer> getCategoryLimit() { //카테고리별 지출한도 Getter
+	
+		return categoryLimit;
 	}
+	
 	public void updateCategory(String c, boolean isLimit) { //카테고리 추가 또는 삭제 시 카테고리 DB 갱신, isLimit = 지출한도만 변경 여부
 		
 		try {
