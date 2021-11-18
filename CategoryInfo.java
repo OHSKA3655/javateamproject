@@ -1,5 +1,7 @@
 package Category;
 
+import java.util.Vector;
+
 public class CategoryInfo {
 	
 	//private String CategoryName;
@@ -27,17 +29,17 @@ public class CategoryInfo {
 	}
 	
 	public void printCategory() { //디버그용 메소드, 카테고리 목록 확인용
-		String[] CList = CDB.getCategory();
-		for (int i = 0; i < CList.length; i++) {
-			System.out.println (CList[i]);
+		Vector<String> CList = CDB.getCategory();
+		for (int i = 0; i < CList.size(); i++) {
+			System.out.println (CList.get(i));
 		}
 		System.out.println();
 	}
 	
 	public void printCategoryLimit() { //디버그용 메소드, 카테고리 지출한도 확인용
-		int[] CLimit = CDB.getCategoryLimit();
-		for (int i = 0; i < CLimit.length; i++) {
-			System.out.println (CLimit[i]);
+		Vector<Integer> CLimit = CDB.getCategoryLimit();
+		for (int i = 0; i < CLimit.size(); i++) {
+			System.out.println (CLimit.get(i));
 		}
 		System.out.println();
 	}
