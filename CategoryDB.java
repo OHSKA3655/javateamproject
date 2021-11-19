@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class CategoryDB {
 	final static int INT_MAX = Integer.MAX_VALUE; //카테고리별 지출 한도 기본값(int 최댓값)
 
-	private Vector<String> categoryList = new Vector<String>(Arrays.asList("수입", "도서", "유흥", "교통", "식사")); //카테고리 목록, 기본적으로 수입, 도서, 유흥, 교통, 식사 카테고리가 있다.
-	private Vector<Integer> categoryLimit = new Vector<Integer>(Arrays.asList(0, INT_MAX, INT_MAX, INT_MAX, INT_MAX)); //카테고리별 지출 한도, 수입을 제외한 카테고리별 지출 한도는 기본값
+	private static Vector<String> categoryList = new Vector<String>(Arrays.asList("수입", "도서", "유흥", "교통", "식사")); //카테고리 목록, 기본적으로 수입, 도서, 유흥, 교통, 식사 카테고리가 있다.
+	private static Vector<Integer> categoryLimit = new Vector<Integer>(Arrays.asList(0, INT_MAX, INT_MAX, INT_MAX, INT_MAX)); //카테고리별 지출 한도, 수입을 제외한 카테고리별 지출 한도는 기본값
 	
 	public CategoryDB() { //생성자
 		
@@ -92,13 +92,28 @@ public class CategoryDB {
 		}
 	}
 
-	public Vector<String> getCategory() { //카테고리 Getter
-	
+	public static Vector<String> getCategory() { //카테고리 Getter
+		
+		try { //CategoryDB 업데이트용
+			FileReader fileReader = new FileReader("CategoryDB.txt"); //파일 생성
+			setCategory(fileReader);
+		}
+		catch(FileNotFoundException e1) {
+			
+		}
 		return categoryList;
 	}
 	
-	public Vector<Integer> getCategoryLimit() { //카테고리별 지출한도 Getter
+	public static Vector<Integer> getCategoryLimit() { //카테고리별 지출한도 Getter
 	
+		try { //CategoryDB 업데이트용
+			FileReader fileReader = new FileReader("CategoryDB.txt"); //파일 생성
+			setCategory(fileReader);
+		}
+		catch(FileNotFoundException e1) {
+			
+		}
+		
 		return categoryLimit;
 	}
 	
@@ -185,11 +200,10 @@ public class CategoryDB {
 		
 	}
 	
-	public void setCategory(FileReader fileReader) { //카테고리 DB에서 카테고리 목록을 불러온다.
+	public static void setCategory(FileReader fileReader) { //카테고리 DB에서 카테고리 목록을 불러온다.
 		
 		 try {
 			 BufferedReader bufReader = new BufferedReader(fileReader);
-			 int i = 0;
 			 String line = null;
 			 String[] splitline = {"", ""};
 			 //카테고리 리스트 초기화
@@ -202,7 +216,6 @@ public class CategoryDB {
 	             if (splitline.length != 1) {
 	             categoryLimit.add(Integer.parseInt(splitline[1]));
 	             }
-	             i++;
 	         }
 			 bufReader.close();
 			}
