@@ -29,7 +29,7 @@ public class CategoryInfo {
 	}
 	
 	public void printCategory() { //디버그용 메소드, 카테고리 목록 확인용
-		Vector<String> CList = CDB.getCategory();
+		Vector<String> CList = CategoryDB.getCategory();
 		for (int i = 0; i < CList.size(); i++) {
 			System.out.println (CList.get(i));
 		}
@@ -37,7 +37,7 @@ public class CategoryInfo {
 	}
 	
 	public void printCategoryLimit() { //디버그용 메소드, 카테고리 지출한도 확인용
-		Vector<Integer> CLimit = CDB.getCategoryLimit();
+		Vector<Integer> CLimit = CategoryDB.getCategoryLimit();
 		for (int i = 0; i < CLimit.size(); i++) {
 			System.out.println (CLimit.get(i));
 		}
